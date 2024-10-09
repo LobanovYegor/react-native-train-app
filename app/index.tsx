@@ -1,18 +1,11 @@
-import { Link } from "expo-router";
-import { View } from "react-native";
+import { Redirect } from "expo-router";
 
 export default function Index() {
+  const isAuthenticated = true;
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Link href="/(auth)/login">Go to login</Link>
-      <Link href="/(auth)/registration">Go to registration</Link>
-      <Link href="/(root)">Go to registration</Link>
-    </View>
+    <Redirect
+      href={isAuthenticated ? "/(root)/(tabs)/news" : "/(auth)/login"}
+    />
   );
 }

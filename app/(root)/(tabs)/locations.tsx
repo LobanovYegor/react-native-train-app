@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-export default function Registration() {
+export default function Locations() {
   return (
     <View
       style={{
@@ -9,7 +9,7 @@ export default function Registration() {
         alignItems: "center",
       }}
     >
-      <Text>Registration.</Text>
+      <Text>Locations.</Text>
     </View>
   );
 }
