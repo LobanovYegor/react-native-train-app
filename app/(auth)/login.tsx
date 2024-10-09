@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { Link } from "expo-router";
+import { Text, View } from "react-native";
 
 export default function Login() {
   return (
@@ -9,7 +10,8 @@ export default function Login() {
         alignItems: "center",
       }}
     >
-      <Text>Login</Text>
+      <Text>Login.</Text>
+      <Link href="/(root)">Back</Link>
     </View>
   );
 }
