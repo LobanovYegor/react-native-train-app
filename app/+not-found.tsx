@@ -1,41 +1,40 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
+import CustomButton, { ButtonType } from "@/components/CustomButton";
 import { Stack, useRouter } from "expo-router";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image, SafeAreaView } from "react-native";
+
+import logo from "@/assets/images/logo.png";
+import illustration from "@/assets/images/illustration.png";
 
 export default function NotFoundScreen() {
   const router = useRouter();
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <Stack.Screen options={{ title: "404", headerShown: false }} />
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <Image source={require("@/assets/images/logo.png")} />
+          <Image source={logo} />
           <Text style={styles.title}>Page not found</Text>
           <Text style={styles.text}>
             The requested page could not be found but may be available again in
             the future
           </Text>
-          <Image
-            source={require("@/assets/images/Illustration.png")}
-            style={styles.illustration}
-          />
+          <Image source={illustration} style={styles.illustration} />
         </View>
-        <TouchableOpacity
-          style={styles.button}
+        <CustomButton
+          type={ButtonType.Primary}
+          title="Go to homepage"
           onPress={() => router.replace("/")}
-        >
-          <Text style={styles.buttonText}>Go to homepage</Text>
-        </TouchableOpacity>
+        />
       </View>
-    </>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#FFF",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
     width: "100%",
@@ -63,23 +62,5 @@ const styles = StyleSheet.create({
   illustration: {
     objectFit: "scale-down",
     width: "100%",
-  },
-  button: {
-    paddingLeft: 24,
-    paddingRight: 24,
-    borderRadius: 4,
-    backgroundColor: "#D61F26",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 40,
-    marginTop: "auto",
-  },
-  buttonText: {
-    color: "#FFF",
-    textTransform: "uppercase",
-    fontSize: 14,
-    fontWeight: 400,
-    fontFamily: "EtelkaMedium",
   },
 });
