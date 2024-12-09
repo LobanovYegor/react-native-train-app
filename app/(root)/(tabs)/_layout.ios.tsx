@@ -1,5 +1,4 @@
 import LocationIcon from "@/assets/icons/location.icon";
-import LogoutIcon from "@/assets/icons/logout.icon";
 import NewsIcon from "@/assets/icons/news.icon";
 import TeamIcon from "@/assets/icons/team.icon";
 import { Tabs } from "expo-router";
@@ -48,7 +47,7 @@ export default function RootLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="logout"
         options={{
           tabBarLabel: "Log Out",
@@ -57,7 +56,7 @@ export default function RootLayout() {
             <LogoutIcon color={focused ? "#D61F26" : "#8C8C8C"} />
           ),
         }}
-      />
+      /> */}
     </Tabs>
   );
 }
