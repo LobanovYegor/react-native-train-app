@@ -2,6 +2,7 @@ import LocationIcon from "@/assets/icons/location.icon";
 import NewsIcon from "@/assets/icons/news.icon";
 import TeamIcon from "@/assets/icons/team.icon";
 import { Tabs } from "expo-router";
+import { SafeAreaView, Text, View } from "react-native";
 
 export default function RootLayout() {
   return (
@@ -14,6 +15,9 @@ export default function RootLayout() {
           padding: 8,
           borderTopColor: "rgba(0,0,0,0.3)",
           borderTopWidth: 0.33,
+        },
+        header: ({ route }) => {
+          return <TabsHeader title={route.name} />;
         },
       }}
     >
@@ -60,3 +64,18 @@ export default function RootLayout() {
     </Tabs>
   );
 }
+
+const TabsHeader = ({ title }: { title: string }) => {
+  return (
+    <SafeAreaView>
+      <View className="items-center">
+        <Text className="text-lg font-bold color-brand-600 first-letter:uppercase">
+          {title.charAt(0).toUpperCase() + title.slice(1)}
+        </Text>
+        <View>
+          <Text>Search wil appear here soon...</Text>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
