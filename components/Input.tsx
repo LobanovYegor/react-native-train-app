@@ -34,8 +34,7 @@ export default function Input(props: InputProps) {
           paddingBottom: 4,
         }}
       >
-        {" "}
-        {props.label}{" "}
+        {props.label}
       </Text>
 
       <View
@@ -95,8 +94,7 @@ export default function Input(props: InputProps) {
           paddingTop: 4,
         }}
       >
-        {" "}
-        {props?.hint}{" "}
+        {props?.hint}
       </Text>
     </View>
   );

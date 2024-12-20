@@ -6,8 +6,8 @@ import * as SplashScreen from "expo-splash-screen";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    EtelkaText: require("../assets/fonts/EtelkaText.otf"),
-    EtelkaMedium: require("../assets/fonts/EtelkaMedium.otf"),
+    PrimaryText: require("../assets/fonts/EtelkaText.otf"),
+    PrimaryMedium: require("../assets/fonts/EtelkaMedium.otf"),
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 

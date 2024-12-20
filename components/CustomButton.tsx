@@ -1,14 +1,15 @@
+import colors from "@/constants/Colors";
 import {
   StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableOpacityProps,
   ViewStyle,
+  Text,
 } from "react-native";
 
 interface CustomButtonType extends TouchableOpacityProps {
   title: string;
-  type: ButtonType;
+  type?: ButtonType;
   customButtonStyle?: ViewStyle;
   customButtonTextStyle?: ViewStyle;
 }
@@ -24,7 +25,6 @@ const CustomButton = ({
   title,
   type,
   customButtonStyle,
-  customButtonTextStyle,
 }: CustomButtonType) => {
   const styles = StyleSheet.create({
     button: {
@@ -45,7 +45,6 @@ const CustomButton = ({
       fontWeight: 400,
       fontFamily: "EtelkaMedium",
       ...getButtonTextStyle(type),
-      ...customButtonTextStyle,
     },
   });
 
@@ -56,46 +55,48 @@ const CustomButton = ({
   );
 };
 
-const getButtonStyles = (type: ButtonType) => {
+const getButtonStyles = (type?: ButtonType) => {
   switch (type) {
     case ButtonType.Primary:
+    default:
       return {
-        backgroundColor: "#D61F26",
+        backgroundColor: colors.brand["100"],
         border: 0,
       };
     case ButtonType.Outline:
       return {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: "#3B3B3B",
+        borderColor: colors.secondary["900"],
       };
     case ButtonType.PrimaryOutline:
       return {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: "#D61F26",
+        borderColor: colors.brand["100"],
       };
-    default:
-      return {};
+    // default:
+    //   return {};
   }
 };
 
-const getButtonTextStyle = (type: ButtonType) => {
+const getButtonTextStyle = (type?: ButtonType) => {
   switch (type) {
     case ButtonType.Primary:
+    default:
       return {
-        color: "#FFF",
+        color: colors.brand["200"],
       };
     case ButtonType.Outline:
       return {
-        color: "#000",
+        color: colors.brand["700"],
       };
     case ButtonType.PrimaryOutline:
       return {
-        color: "#D61F26",
+        color: colors.brand["100"],
       };
-    default:
-      return {};
+    // default:
+    //   return {};
   }
 };
 

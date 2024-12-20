@@ -1,6 +1,9 @@
 node_modules/
 .expo/
+.idea/
 dist/
+ios/
+android/
 npm-debug.*
 *.jks
 *.p8
@@ -9,6 +12,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+mocks/
+MockedData.ts
 
 # macOS
 .DS_Store
