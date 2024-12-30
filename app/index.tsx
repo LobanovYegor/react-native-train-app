@@ -2,7 +2,7 @@ import { Redirect } from "expo-router";
 import "../global.css";
 
 export default function Index() {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   return (
     <Redirect

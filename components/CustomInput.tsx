@@ -3,8 +3,10 @@ import VisibilityOff from "@/assets/icons/visibility_off";
 import VisibilityOn from "@/assets/icons/visibility_on";
 import { ReactElement, useState } from "react";
 import {
+  NativeSyntheticEvent,
   Text,
   TextInput,
+  TextInputFocusEventData,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -12,27 +14,25 @@ import {
 
 interface InputProps {
   label: string;
-  onChangeText: (text: string) => void;
+  onChangeText: (value: string) => void;
+  onBlur: (value: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  touched?: boolean;
   style?: ViewStyle;
   value?: string;
   hint?: string;
+  errors?: string;
   isSecureInput?: boolean;
   prefixIcon?: ReactElement;
 }
 
-export default function Input(props: InputProps) {
+export default function CustomInput(props: InputProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   return (
     <View style={{ ...props.style }}>
       <Text
-        style={{
-          textAlign: "left",
-          width: "100%",
-          color: "#636363",
-          paddingBottom: 4,
-        }}
+        className={`pb-1 text-sm ${props.touched && props.errors ? "color-brand-100" : "color-secondary-700"}`}
       >
         {props.label}
       </Text>
@@ -44,13 +44,13 @@ export default function Input(props: InputProps) {
           minHeight: 40,
           maxHeight: 40,
           borderStyle: "solid",
-          borderColor: "#CACACA",
           borderWidth: 1,
           display: "flex",
           flexDirection: "row",
           borderRadius: 4,
           width: "100%",
         }}
+        className={`${props.touched && props.errors ? "border-brand-100" : "border-secondary-200"}`}
       >
         {!!props.prefixIcon && (
           <View style={{ padding: 7 }}>{props.prefixIcon}</View>
@@ -64,6 +64,7 @@ export default function Input(props: InputProps) {
             setInputValue(value);
             props.onChangeText(value);
           }}
+          onBlur={(event) => props.onBlur(event)}
         ></TextInput>
 
         <TouchableOpacity onPress={() => setInputValue("")}>
@@ -86,15 +87,11 @@ export default function Input(props: InputProps) {
           </TouchableOpacity>
         )}
       </View>
+
       <Text
-        style={{
-          textAlign: "left",
-          width: "100%",
-          color: "#636363",
-          paddingTop: 4,
-        }}
+        className={`text-xs pt-1 color-brand-${props.touched && props.errors ? "100" : "600"}`}
       >
-        {props?.hint}
+        {props.touched && props.errors ? props.errors : props.hint}
       </Text>
     </View>
   );

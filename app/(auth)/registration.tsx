@@ -1,106 +1,149 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { Link, router } from "expo-router";
-import { useState } from "react";
 import { Text, View, Image } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 import KeyIcon from "@/assets/icons/key.icon";
 import MailIcon from "@/assets/icons/mail.icon";
 import UserIcon from "@/assets/icons/user.icon";
 import CustomButton, { ButtonType } from "@/components/CustomButton";
-import Input from "@/components/Input";
+import CustomInput from "@/components/CustomInput";
+import { emailRegex, passwordRegex, userNameRegex } from "@/constants/regExps";
+
+interface RegistrationForm {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  firstName: string;
+  lastName: string;
+}
+
+const RegistrationForm: RegistrationForm = {
+  email: "",
+  password: "",
+  passwordConfirmation: "",
+  firstName: "",
+  lastName: "",
+};
+const RegistrationSchema = Yup.object().shape({
+  email: Yup.string()
+    .matches(emailRegex, "Invalid email address")
+    .required("Required"),
+  password: Yup.string()
+    .matches(passwordRegex, "Invalid password")
+    .required("Required"),
+  passwordConfirmation: Yup.string()
+    .matches(passwordRegex, "Invalid password")
+    .required("Required"),
+  firstName: Yup.string()
+    .matches(userNameRegex, "Invalid user name")
+    .required("Required"),
+  lastName: Yup.string()
+    .matches(userNameRegex, "Invalid user name")
+    .required("Required"),
+});
 
 export default function Registration() {
-  const [firstName, setFirstName] = useState("");
-  const [secondName, setSecondName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-
-  const handleLogin = () => {
-    console.log(
-      "firstName:",
-      firstName,
-      "secondName:",
-      secondName,
-      "email:",
-      email,
-      "password:",
-      password,
-      passwordConfirmation,
-    );
+  const handleRegistration = (values: RegistrationForm) => {
+    console.log(values);
     router.replace("/");
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 16,
-      }}
+    <Formik
+      initialValues={RegistrationForm}
+      validationSchema={RegistrationSchema}
+      onSubmit={handleRegistration}
     >
-      <Image source={require("@/assets/images/logo.png")} />
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+      }) => (
+        <View className="flex-1 items-center justify-center p-4">
+          <Image source={require("@/assets/images/logo.png")} />
 
-      <Text
-        style={{
-          fontSize: 24,
-          marginTop: 24,
-          marginBottom: 24,
-          fontFamily: "EtelkaMedium",
-        }}
-      >
-        Sing up
-      </Text>
+          <Text className="text-2xl font-bold my-6">Sing up</Text>
 
-      <Input
-        label="First name"
-        onChangeText={(value) => setFirstName(value)}
-        prefixIcon={<UserIcon color="#8C8C8C" />}
-        style={{ marginBottom: 8 }}
-      ></Input>
+          <CustomInput
+            label="First name"
+            onChangeText={handleChange("firstName")}
+            onBlur={handleBlur("firstName")}
+            prefixIcon={<UserIcon color="#8C8C8C" />}
+            style={{ marginBottom: 8 }}
+            touched={touched.firstName}
+            errors={errors.firstName}
+            value={values.firstName}
+          ></CustomInput>
 
-      <Input
-        label="Last name"
-        onChangeText={(value) => setSecondName(value)}
-        prefixIcon={<UserIcon color="#8C8C8C" />}
-        style={{ marginBottom: 8 }}
-      ></Input>
+          <CustomInput
+            label="Last name"
+            onChangeText={handleChange("lastName")}
+            onBlur={handleBlur("lastName")}
+            prefixIcon={<UserIcon color="#8C8C8C" />}
+            style={{ marginBottom: 8 }}
+            touched={touched.lastName}
+            errors={errors.lastName}
+            value={values.lastName}
+          ></CustomInput>
 
-      <Input
-        label="Email"
-        onChangeText={(value) => setEmail(value)}
-        prefixIcon={<MailIcon color="#8C8C8C" />}
-        style={{ marginBottom: 8 }}
-      ></Input>
+          <CustomInput
+            label="Email"
+            onChangeText={handleChange("email")}
+            onBlur={handleBlur("email")}
+            prefixIcon={<MailIcon color="#8C8C8C" />}
+            style={{ marginBottom: 8 }}
+            touched={touched.email}
+            errors={errors.email}
+            value={values.email}
+          ></CustomInput>
 
-      <Input
-        label="Password"
-        onChangeText={(value) => setPassword(value)}
-        prefixIcon={<KeyIcon color="#8C8C8C" />}
-        isSecureInput
-      ></Input>
+          <CustomInput
+            label="Password"
+            onChangeText={handleChange("password")}
+            onBlur={handleBlur("password")}
+            prefixIcon={<KeyIcon color="#8C8C8C" />}
+            style={{ marginBottom: 8 }}
+            touched={touched.password}
+            errors={errors.password}
+            value={values.password}
+            isSecureInput
+          ></CustomInput>
 
-      <Input
-        label="Repeat password"
-        onChangeText={(value) => setPasswordConfirmation(value)}
-        prefixIcon={<KeyIcon color="#8C8C8C" />}
-        isSecureInput
-      ></Input>
+          <CustomInput
+            label="Repeat password"
+            onChangeText={handleChange("passwordConfirmation")}
+            onBlur={handleBlur("passwordConfirmation")}
+            prefixIcon={<KeyIcon color="#8C8C8C" />}
+            touched={touched.passwordConfirmation}
+            errors={errors.passwordConfirmation}
+            value={values.passwordConfirmation}
+            isSecureInput
+          ></CustomInput>
 
-      <CustomButton
-        type={ButtonType.Primary}
-        title="Sign up"
-        customButtonStyle={{ width: "100%", marginTop: 24 }}
-        onPress={handleLogin}
-      />
+          <CustomButton
+            type={ButtonType.Primary}
+            title="Sign up"
+            customButtonStyle={{ width: "100%", marginTop: 24 }}
+            onPress={handleSubmit}
+          />
 
-      <Link
-        style={{ fontSize: 15, textDecorationLine: "underline", marginTop: 16 }}
-        href="./login"
-      >
-        Already have an account?
-      </Link>
-    </View>
+          <Link
+            style={{
+              fontSize: 15,
+              textDecorationLine: "underline",
+              marginTop: 16,
+            }}
+            href="./login"
+          >
+            Already have an account?
+          </Link>
+        </View>
+      )}
+    </Formik>
   );
 }
